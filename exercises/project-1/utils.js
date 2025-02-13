@@ -86,6 +86,8 @@ export const takePicture = (video, callback) => {
 // -----------
 
 export const drawFaceBox = (photo, faces) => {
+  console.log(photo);
+  console.log(faces);
   // Draw box around the face detected ⬇️
   // ------------------------------------
   const faceCanvas = document.createElement("canvas");

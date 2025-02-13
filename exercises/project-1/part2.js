@@ -1,6 +1,6 @@
 import "@tensorflow/tfjs";
 import * as cocoSsd from "@tensorflow-models/coco-ssd";
-import { showResult, startWebcam, takePicture } from "./utils";
+import { drawFaceBox, startWebcam, takePicture } from "./utils";
 
 const webcamButton = document.getElementById("webcam");
 const captureButton = document.getElementById("pause");
@@ -13,13 +13,12 @@ const init = async () => {
 };
 
 webcamButton.onclick = () => startWebcam(video);
-
 captureButton.onclick = () => takePicture(video, predict);
 
 const predict = async (img) => {
   const prediction = await model.detect(img);
   console.log({ prediction });
-  showResult(prediction);
+  drawFaceBox(img, prediction.faces);
 };
 
 init();
