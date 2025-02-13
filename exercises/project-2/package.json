@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "python3 -m http.server 1234",
+    "watch": "py -3 -m http.server 1234",
     "start": "npx parcel index.html --no-hmr --open"
   },
   "author": "",
