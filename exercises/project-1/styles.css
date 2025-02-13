@@ -42,5 +42,6 @@ button {
 
 #webcam-section #predictions {
   display: block;
-  width: 50%;
+  /* width: 50%; */
+  font-size: 1.5rem;
 }
