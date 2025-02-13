@@ -109,3 +109,24 @@ export const drawFaceBox = (photo, faces) => {
   const webcamSection = document.getElementById("webcam-section");
   webcamSection.appendChild(faceCanvas);
 };
+export const drawFaceKeypoints = (photo, faces) => {
+  const keypointsCanvas = document.createElement("canvas");
+  keypointsCanvas.width = IMAGE_SIZE;
+  keypointsCanvas.height = IMAGE_SIZE;
+  keypointsCanvas.style.position = "absolute";
+  keypointsCanvas.style.left = photo.offsetLeft;
+  keypointsCanvas.style.top = photo.offsetTop;
+  const ctx = keypointsCanvas.getContext("2d");
+
+  ctx.fillStyle = "blue";
+  faces.forEach((face) => {
+    face.keypoints.forEach((keypoint) => {
+      ctx.beginPath();
+      ctx.arc(keypoint.x, keypoint.y, 3, 0, 2 * Math.PI);
+      ctx.fill();
+    });
+  });
+
+  const webcamSection = document.getElementById("webcam-section");
+  webcamSection.appendChild(keypointsCanvas);
+};
