@@ -27,8 +27,8 @@
         </section>
       </section> -->
 
-      <!-- part 2 & 3 -->
-      <section id="webcam-section">
+      <!-- part 2, 3 & 4 -->
+      <!-- <section id="webcam-section">
         <section id="input">
           <h2>Prediction using an image captured from the webcam</h2>
 
@@ -43,12 +43,31 @@
         </section>
 
         <div id="predictions"></div>
+      </section> -->
+      <!-- part 5 live draw -->
+      <section id="webcam-section">
+        <section id="input">
+          <h2>Prediction using an image captured from the webcam</h2>
+          <div style="margin-bottom: 2rem">
+            <button id="predict" disabled>Predict</button>
+            <button id="webcam">Webcam</button>
+            <button id="pause">Capture</button>
+          </div>
+
+          <div>
+            <video style="display: none"></video>
+            <div id="predictions"></div>
+          </div>
+
+          <canvas id="canvas"> </canvas>
+        </section>
       </section>
 
       <!-- <script type="module" src="part1.js"></script> -->
       <!-- <script type="module" src="part2.js"></script> -->
       <!-- <script type="module" src="part3.js"></script> -->
-      <script type="module" src="part4.js"></script>
+      <!-- <script type="module" src="part4.js"></script> -->
+      <script type="module" src="part5.js"></script>
     </div>
   </body>
 </html>
