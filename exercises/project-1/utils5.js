@@ -7,39 +7,12 @@ export const showResult = (classes) => {
   for (let i = 0; i < classes.length; i++) {
     probsContainer.innerText = `Prediction: ${classes[i].class}, Probability: ${classes[i].score}`;
   }
+  // predictionsElement.innerHTML = ""; // Clear previous predictions
   predictionsElement.appendChild(probsContainer);
 };
 
 // export const IMAGE_SIZE = 224;
 export const IMAGE_SIZE = 400;
-
-export const handleFilePicker = (callback) => {
-  const fileElement = document.getElementById("file");
-  fileElement.addEventListener("change", (evt) => {
-    let file = evt.target.files;
-    let f = file[0];
-
-    if (!f.type.match("image.*")) {
-      return;
-    }
-
-    let reader = new FileReader();
-    reader.onload = (e) => {
-      let img = document.createElement("img");
-      img.src = e.target.result;
-      img.width = IMAGE_SIZE;
-      img.height = IMAGE_SIZE;
-      const loadedImgElement = document.getElementById("loaded-image");
-      loadedImgElement.appendChild(img);
-      loadedimg = img;
-
-      img.onload = () => callback(img);
-
-      // img.onload = () => predict(img);
-    };
-    reader.readAsDataURL(f);
-  });
-};
 
 // Part 2
 // -----------
@@ -78,7 +51,7 @@ export const takePicture = (video, callback) => {
   context.drawImage(video, 0, 0, width, height);
 
   const outputEl = document.getElementById("predictions");
-  // outputEl.appendChild(photo);
+  // outputEl.innerHTML = ""; // Clear previous canvas
   outputEl.appendChild(canvas);
 
   predictButton.disabled = false;
@@ -105,12 +78,7 @@ export const drawFaceBox = (photo, faces) => {
   }
   // Draw box around the face detected ⬇️
   // ------------------------------------
-  const faceCanvas = document.createElement("canvas");
-  faceCanvas.width = IMAGE_SIZE;
-  faceCanvas.height = IMAGE_SIZE;
-  faceCanvas.style.position = "absolute";
-  faceCanvas.style.left = photo.offsetLeft;
-  faceCanvas.style.top = photo.offsetTop;
+  const faceCanvas = createCanvas(photo);
   const ctx = faceCanvas.getContext("2d");
   ctx.beginPath();
   ctx.strokeStyle = "red";
@@ -122,18 +90,15 @@ export const drawFaceBox = (photo, faces) => {
   );
 
   const webcamSection = document.getElementById("webcam-section");
+  // webcamSection.innerHTML = ""; // Clear previous face boxes
   webcamSection.appendChild(faceCanvas);
   setTimeout(() => {
     webcamSection.removeChild(faceCanvas);
   }, 30);
 };
+
 export const drawFaceKeypoints = (photo, faces) => {
-  const keypointsCanvas = document.createElement("canvas");
-  keypointsCanvas.width = IMAGE_SIZE;
-  keypointsCanvas.height = IMAGE_SIZE;
-  keypointsCanvas.style.position = "absolute";
-  keypointsCanvas.style.left = photo.offsetLeft;
-  keypointsCanvas.style.top = photo.offsetTop;
+  const keypointsCanvas = createCanvas(photo);
   const ctx = keypointsCanvas.getContext("2d");
 
   ctx.fillStyle = "blue";
@@ -146,6 +111,7 @@ export const drawFaceKeypoints = (photo, faces) => {
   });
 
   const webcamSection = document.getElementById("webcam-section");
+  // webcamSection.innerHTML = ""; // Clear previous keypoints
   webcamSection.appendChild(keypointsCanvas);
   setTimeout(() => {
     webcamSection.removeChild(keypointsCanvas);
@@ -164,6 +130,16 @@ const drawCanvasFromVideo = (video) => {
   context.drawImage(video, 0, 0, width, height);
 
   const outputEl = document.getElementById("predictions");
-  // outputEl.appendChild(photo);
+  outputEl.innerHTML = ""; // Clear previous canvas
   outputEl.appendChild(canvas);
+};
+
+const createCanvas = (photo) => {
+  const canvas = document.createElement("canvas");
+  canvas.width = IMAGE_SIZE;
+  canvas.height = IMAGE_SIZE;
+  canvas.style.position = "absolute";
+  canvas.style.left = photo.offsetLeft;
+  canvas.style.top = photo.offsetTop;
+  return canvas;
 };

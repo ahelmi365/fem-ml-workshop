@@ -25,8 +25,10 @@ const init = async () => {
   });
 };
 
-webcamButton.onclick = () => startWebcam(video, predict);
-captureButton.onclick = () => takePicture(video, predict);
+const setupEventListeners = () => {
+  webcamButton.onclick = () => startWebcam(video, predict);
+  captureButton.onclick = () => takePicture(video, predict);
+};
 
 const predict = async (img) => {
   const faces = await detector.estimateFaces(img, {
@@ -38,4 +40,4 @@ const predict = async (img) => {
   drawFaceKeypoints(img, faces);
 };
 
-init();
+init().then(setupEventListeners);

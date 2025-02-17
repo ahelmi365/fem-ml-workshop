@@ -9,42 +9,6 @@
     <div class="tfjs-example-container">
       <h1>TensorFlow.js: Using a pre-trained model</h1>
 
-      <!-- part 1 -->
-      <!-- <section id="uploaded-image">
-        <section id="input">
-          <h2>Prediction using an uploaded image</h2>
-          <div id="file-container">
-            <input type="file" id="file" name="file" />
-          </div>
-
-          <div id="loaded-image"></div>
-        </section>
-
-        <section id="predictions">
-          <div class="output"></div>
-
-          <div id="predictions"></div>
-        </section>
-      </section> -->
-
-      <!-- part 2, 3 & 4 -->
-      <!-- <section id="webcam-section">
-        <section id="input">
-          <h2>Prediction using an image captured from the webcam</h2>
-
-          <div>
-            <video></video>
-          </div>
-          <button id="predict" disabled>Predict</button>
-          <button id="webcam">Webcam</button>
-          <button id="pause">Capture</button>
-
-          <canvas id="canvas"> </canvas>
-        </section>
-
-        <div id="predictions"></div>
-      </section> -->
-      <!-- part 5 live draw -->
       <section id="webcam-section">
         <section id="input">
           <h2>Prediction using an image captured from the webcam</h2>
@@ -54,7 +18,7 @@
             <button id="pause">Capture</button>
           </div>
 
-          <div>
+          <div id="webcam-container">
             <video style="display: none"></video>
             <div id="predictions"></div>
           </div>
@@ -63,10 +27,6 @@
         </section>
       </section>
 
-      <!-- <script type="module" src="part1.js"></script> -->
-      <!-- <script type="module" src="part2.js"></script> -->
-      <!-- <script type="module" src="part3.js"></script> -->
-      <!-- <script type="module" src="part4.js"></script> -->
       <script type="module" src="part5.js"></script>
     </div>
   </body>
