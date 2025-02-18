@@ -15,6 +15,11 @@ import {
 const webcamButton = document.getElementById("webcam");
 const captureButton = document.getElementById("pause");
 const video = document.querySelector("video");
+const status = document.getElementById("status");
+const showBox = document.getElementById("show-box");
+let showBoxValue = false;
+const showFaceKeypoints = document.getElementById("show-face-keypoints");
+let showFaceKeypointsValue = false;
 
 let model, detector;
 
@@ -27,7 +32,13 @@ const init = async () => {
 
 const setupEventListeners = () => {
   webcamButton.onclick = () => startWebcam(video, predict);
-  captureButton.onclick = () => takePicture(video, predict);
+  // captureButton.onclick = () => takePicture(video, predict);
+  showBox.onclick = () => {
+    showBoxValue = !showBoxValue;
+  };
+  showFaceKeypoints.onclick = () => {
+    showFaceKeypointsValue = !showFaceKeypointsValue;
+  };
 };
 
 const predict = async (img) => {
@@ -35,9 +46,26 @@ const predict = async (img) => {
     flipHorizontal: false,
   });
 
+  if (faces.length === 0) {
+    status.innerText = "No face detected, try again";
+    status.style.backgroundColor = "red";
+    // status.style.color = "white";
+    // message.innerText = "Please try again";
+    return;
+  } else {
+    status.innerText = "Face detected";
+    status.style.backgroundColor = "green";
+    // status.style.color = "white";
+    // message.innerText = "";
+  }
+
   // console.log({ faces });
-  drawFaceBox(img, faces);
-  drawFaceKeypoints(img, faces);
+  if (showBoxValue) {
+    drawFaceBox(img, faces);
+  }
+  if (showFaceKeypointsValue) {
+    drawFaceKeypoints(img, faces);
+  }
 };
 
 init().then(setupEventListeners);

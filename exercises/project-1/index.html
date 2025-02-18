@@ -6,16 +6,74 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="tfjs-example-container">
+    <div
+      class="tfjs-example-container"
+      style="
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      "
+    >
       <h1>TensorFlow.js: Using a pre-trained model</h1>
 
-      <section id="webcam-section">
+      <section
+        id="webcam-section"
+        style="display: flex; justify-content: center; gap: 1rem"
+      >
         <section id="input">
           <h2>Prediction using an image captured from the webcam</h2>
           <div style="margin-bottom: 2rem">
-            <button id="predict" disabled>Predict</button>
-            <button id="webcam">Webcam</button>
-            <button id="pause">Capture</button>
+            <!-- <button id="predict" disabled>Predict</button> -->
+            <button
+              id="webcam"
+              style="
+                background-color: rgb(88, 91, 243);
+                border: none;
+                padding: 10px 20px;
+                cursor: pointer;
+                color: white;
+              "
+            >
+              Webcam
+            </button>
+            <!-- <button id="pause">Capture</button> -->
+            <button
+              id="status"
+              style="
+                background-color: rgb(88, 91, 243);
+                border: none;
+                padding: 10px 20px;
+                cursor: pointer;
+                color: white;
+              "
+            >
+              Status
+            </button>
+          </div>
+          <div style="margin-bottom: 2rem">
+            <label
+              for="show-box"
+              id="show-box-label"
+              style="margin-right: 1rem; font-size: large"
+              ><input
+                type="checkbox"
+                name="showBox"
+                id="show-box"
+                style="margin-right: 0.5rem"
+              />Show Box
+            </label>
+            <label
+              for="show-face-keypoints"
+              id="show-face-keypoints-label"
+              style="margin-right: 1rem; font-size: large"
+              ><input
+                type="checkbox"
+                name="showFaceKeypoints"
+                id="show-face-keypoints"
+                style="margin-right: 0.5rem"
+              />Show Face Keypoint
+            </label>
           </div>
 
           <div id="webcam-container">

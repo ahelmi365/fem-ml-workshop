@@ -102,6 +102,7 @@ export const drawFaceKeypoints = (photo, faces) => {
   const ctx = keypointsCanvas.getContext("2d");
 
   ctx.fillStyle = "blue";
+  // ctx.fillStyle = "red";
   faces.forEach((face) => {
     face.keypoints.forEach((keypoint) => {
       ctx.beginPath();
