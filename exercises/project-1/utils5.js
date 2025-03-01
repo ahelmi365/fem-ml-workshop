@@ -3,15 +3,15 @@
 
 export const showResult = (classes) => {
   const predictionsElement = document.getElementById("predictions");
-  const probsContainer = document.createElement("div");
-  for (let i = 0; i < classes.length; i++) {
-    probsContainer.innerText = `Prediction: ${classes[i].class}, Probability: ${classes[i].score}`;
-  }
-  // predictionsElement.innerHTML = ""; // Clear previous predictions
-  predictionsElement.appendChild(probsContainer);
+  predictionsElement.innerHTML = ""; // Clear previous predictions
+  classes.forEach(({ class: className, score }) => {
+    const probsContainer = document.createElement("div");
+    probsContainer.innerText = `Prediction: ${className}, Probability: ${score}`;
+    predictionsElement.appendChild(probsContainer);
+  });
 };
 
-// export const IMAGE_SIZE = 224;
+// Set a consistent image size for processing
 export const IMAGE_SIZE = 400;
 
 // Part 2
@@ -25,7 +25,6 @@ export const startWebcam = (video, callback) => {
     })
     .then((stream) => {
       video.srcObject = stream;
-      track = stream.getTracks()[0];
       video.onloadedmetadata = () => video.play();
       video.style.display = "none";
       setInterval(() => {
@@ -34,15 +33,13 @@ export const startWebcam = (video, callback) => {
       }, 30);
     })
     .catch((err) => {
-      /* handle the error */
+      console.error("Error accessing webcam: ", err);
     });
 };
 
 export const takePicture = (video, callback) => {
   const predictButton = document.getElementById("predict");
   const canvas = document.getElementById("canvas");
-  // const width = 320; // We will scale the photo width to this
-  // const height = 185;
   const width = IMAGE_SIZE; // We will scale the photo width to this
   const height = IMAGE_SIZE;
   const context = canvas.getContext("2d");
@@ -51,7 +48,7 @@ export const takePicture = (video, callback) => {
   context.drawImage(video, 0, 0, width, height);
 
   const outputEl = document.getElementById("predictions");
-  // outputEl.innerHTML = ""; // Clear previous canvas
+  outputEl.innerHTML = ""; // Clear previous canvas
   outputEl.appendChild(canvas);
 
   predictButton.disabled = false;
@@ -65,19 +62,10 @@ export const takePicture = (video, callback) => {
 // -----------
 
 export const drawFaceBox = (photo, faces) => {
-  // console.log(photo);
-  if (faces.length === 0) {
-    return;
-  }
-  if (faces[0].box === undefined) {
+  if (faces.length === 0 || faces[0].box === undefined) {
     return;
   }
 
-  if (faces.length > 1) {
-    console.log(faces);
-  }
-  // Draw box around the face detected ⬇️
-  // ------------------------------------
   const faceCanvas = createCanvas(photo);
   const ctx = faceCanvas.getContext("2d");
   ctx.beginPath();
@@ -90,7 +78,6 @@ export const drawFaceBox = (photo, faces) => {
   );
 
   const webcamSection = document.getElementById("webcam-section");
-  // webcamSection.innerHTML = ""; // Clear previous face boxes
   webcamSection.appendChild(faceCanvas);
   setTimeout(() => {
     webcamSection.removeChild(faceCanvas);
@@ -102,7 +89,6 @@ export const drawFaceKeypoints = (photo, faces) => {
   const ctx = keypointsCanvas.getContext("2d");
 
   ctx.fillStyle = "blue";
-  // ctx.fillStyle = "red";
   faces.forEach((face) => {
     face.keypoints.forEach((keypoint) => {
       ctx.beginPath();
@@ -112,7 +98,6 @@ export const drawFaceKeypoints = (photo, faces) => {
   });
 
   const webcamSection = document.getElementById("webcam-section");
-  // webcamSection.innerHTML = ""; // Clear previous keypoints
   webcamSection.appendChild(keypointsCanvas);
   setTimeout(() => {
     webcamSection.removeChild(keypointsCanvas);
@@ -121,8 +106,6 @@ export const drawFaceKeypoints = (photo, faces) => {
 
 const drawCanvasFromVideo = (video) => {
   const canvas = document.getElementById("canvas");
-  // const width = 320; // We will scale the photo width to this
-  // const height = 185;
   const width = IMAGE_SIZE; // We will scale the photo width to this
   const height = IMAGE_SIZE;
   const context = canvas.getContext("2d");
@@ -140,7 +123,7 @@ const createCanvas = (photo) => {
   canvas.width = IMAGE_SIZE;
   canvas.height = IMAGE_SIZE;
   canvas.style.position = "absolute";
-  canvas.style.left = photo.offsetLeft;
-  canvas.style.top = photo.offsetTop;
+  canvas.style.left = photo.offsetLeft + "px";
+  canvas.style.top = photo.offsetTop + "px";
   return canvas;
 };
